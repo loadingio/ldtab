@@ -27,16 +27,16 @@ main = (opt) ->
 
 main.prototype = Object.create(Object.prototype) <<< do
   init: ->
-    @add ld$.find '[data-name]'
+    @add ld$.find '[ldtab]'
 
   on: (n, cb) -> @evt-handler.[][n].push cb
   fire: (n, ...v) -> for cb in (@evt-handler[n] or []) => cb.apply @, v
   parse: (node) ->
-    p = ld$.parent node, '[data-tab]', @root
-    group = (if p => p else node).getAttribute(\data-tab)
-    name = node.getAttribute(\data-name)
-    tab = if p => p.getAttribute(\data-type) else null
-    if !tab => tab = node.getAttribute(\data-type)
+    p = ld$.parent node, '[ldtab-group]', @root
+    group = (if p => p else node).getAttribute(\ldtab-group)
+    name = node.getAttribute(\ldtab)
+    tab = if p => p.getAttribute(\type) else null
+    if !tab => tab = node.getAttribute(\type)
     tab = tab == \tab
     active = node.hasAttribute(\default) and node.getAttribute(\default) != \false
     return {group,name,tab,active}

@@ -42,7 +42,7 @@
   };
   main.prototype = import$(Object.create(Object.prototype), {
     init: function(){
-      return this.add(ld$.find('[data-name]'));
+      return this.add(ld$.find('[ldtab]'));
     },
     on: function(n, cb){
       var ref$;
@@ -63,12 +63,12 @@
     },
     parse: function(node){
       var p, group, name, tab, active;
-      p = ld$.parent(node, '[data-tab]', this.root);
-      group = (p ? p : node).getAttribute('data-tab');
-      name = node.getAttribute('data-name');
-      tab = p ? p.getAttribute('data-type') : null;
+      p = ld$.parent(node, '[ldtab-group]', this.root);
+      group = (p ? p : node).getAttribute('ldtab-group');
+      name = node.getAttribute('ldtab');
+      tab = p ? p.getAttribute('type') : null;
       if (!tab) {
-        tab = node.getAttribute('data-type');
+        tab = node.getAttribute('type');
       }
       tab = tab === 'tab';
       active = node.hasAttribute('default') && node.getAttribute('default') !== 'false';

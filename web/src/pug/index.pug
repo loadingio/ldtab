@@ -9,35 +9,35 @@ html
     +css("/css/index.css")
   body
     mixin secondary
-      .d-flex.mb-4(data-tab="secondary",data-type="tab")
-        .px-4.py-2(data-name="alt1",default) alt-1
-        .px-4.py-2(data-name="alt2") alt-2
-        .px-4.py-2(data-name="alt3") alt-3
-        .px-4.py-2(data-name="alt4") alt-4
+      .d-flex.mb-4(ldtab-group="secondary",type="tab")
+        .px-4.py-2(ldtab="alt1",default) alt-1
+        .px-4.py-2(ldtab="alt2") alt-2
+        .px-4.py-2(ldtab="alt3") alt-3
+        .px-4.py-2(ldtab="alt4") alt-4
     .w-1024.mx-auto.rwd.my-4
       .d-flex
         .flex-grow-1
-          .d-flex.mb-4(data-tab="main",data-type="tab")
-            .px-4.py-2(data-name="tab1",default) tab1
-            .px-4.py-2(data-name="tab2") tab2
-            .px-4.py-2(data-name="tab3") tab3
-            .px-4.py-2(data-name="tab4") tab4
-          .d-flex.mb-4(data-tab="main", data-type="panel")
-            .p-4(data-name="tab1",default) panel1
-            .p-4(data-name="tab2") panel2
-            .p-4(data-name="tab3")
+          .d-flex.mb-4(ldtab-group="main",type="tab")
+            .px-4.py-2(ldtab="tab1",default) tab1
+            .px-4.py-2(ldtab="tab2") tab2
+            .px-4.py-2(ldtab="tab3") tab3
+            .px-4.py-2(ldtab="tab4") tab4
+          .d-flex.mb-4(ldtab-group="main", type="panel")
+            .p-4(ldtab="tab1",default) panel1
+            .p-4(ldtab="tab2") panel2
+            .p-4(ldtab="tab3")
               .mx-2.mb-4 panel3
               +secondary
-            .p-4(data-name="tab4") panel4
-          .d-flex(data-tab="secondary", data-type="panel")
-            .p-4(data-name="alt1",default) panel1
-            .p-4(data-name="alt2")
+            .p-4(ldtab="tab4") panel4
+          .d-flex(ldtab-group="secondary", type="panel")
+            .p-4(ldtab="alt1",default) panel1
+            .p-4(ldtab="alt2")
               .mx-2.mb-4 panel2
-              .d-flex.mb-4(data-tab="main",data-type="tab")
-                .px-4.py-2(data-name="tab1") tab1
-                .px-4.py-2(data-name="tab2") tab2
-            .p-4(data-name="alt3") panel3
-            .p-4(data-name="alt4") panel4
+              .d-flex.mb-4(ldtab-group="main",type="tab")
+                .px-4.py-2(ldtab="tab1") tab1
+                .px-4.py-2(ldtab="tab2") tab2
+            .p-4(ldtab="alt3") panel3
+            .p-4(ldtab="alt4") panel4
         .flex-grow-1
           +secondary
     +script("/assets/lib/@loadingio/ldquery/main/ldq.min.js")
