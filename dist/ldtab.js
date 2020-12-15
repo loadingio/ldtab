@@ -37,7 +37,9 @@
     this.active = {};
     this.pends = {};
     this.group = {};
-    this.init();
+    if (opt.autoInit) {
+      this.init();
+    }
     return this;
   };
   main.prototype = import$(Object.create(Object.prototype), {

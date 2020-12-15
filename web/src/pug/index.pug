@@ -46,5 +46,6 @@ html
     script: :lsc
       fd = new ldtab do
         root: document.body
+        auto-init: true
         panel: delay: 0, deactivate: ({node}) -> node.classList.remove \active
 

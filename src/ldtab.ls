@@ -20,7 +20,7 @@ main = (opt) ->
   @root = root = if typeof(root) == \string => document.querySelector(root) else if root => root else null
   @ <<< active: {}, pends: {}
   @group = {}
-  @init!
+  if opt.auto-init => @init!
   @
 
 main.prototype = Object.create(Object.prototype) <<< do
