@@ -21,6 +21,7 @@
   },
   "devDependencies": {
     "@loadingio/ldquery": "^1.1.1",
+    "@loadingio/transition.css": "^2.0.0",
     "bootstrap": "^4.5.2",
     "bootstrap.ldui": "github:loadingio/bootstrap.ldui",
     "bootstrap.native": "^3.0.13",
@@ -39,6 +40,7 @@
       "bootstrap.native",
       "@loadingio/ldquery",
       "@loadingio/debounce.js",
+      "@loadingio/transition.css",
       "ldview"
     ]
   }

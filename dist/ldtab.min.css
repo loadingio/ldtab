@@ -1,1 +1,1 @@
-.ldtab{position:relative}
+.ldtab{position:relative;opacity:.5;cursor:pointer}.ldtab.active{opacity:1;position:relative}.ldtab-panel{display:none}.ldtab-panel.active{display:block}

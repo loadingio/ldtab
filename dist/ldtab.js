@@ -2,8 +2,34 @@
 (function(){
   var main;
   main = function(opt){
-    var root;
+    var root, this$ = this;
     this.opt = opt;
+    this.cls = {
+      tab: {
+        className: ['ldtab'],
+        classIn: ['ldtab-in'],
+        classOut: ['ldtab-out'],
+        delay: 350
+      },
+      panel: {
+        className: ['ldtab-panel'],
+        classIn: ['ldtab-panel-in'],
+        classOut: ['ldtab-panel-out'],
+        delay: 350
+      }
+    };
+    import$(this.cls.tab, opt.tab || {});
+    import$(this.cls.panel, opt.panel || {});
+    this.evtHandler = {};
+    ['tab', 'panel'].map(function(t){
+      return ['className', 'classIn', 'classOut'].map(function(n){
+        if (typeof this$.cls[t][n] === 'string') {
+          return this$.cls[t][n] = this$.cls[t][n].split(' ').filter(function(it){
+            return it.trim();
+          });
+        }
+      });
+    });
     root = opt.root;
     this.root = root = typeof root === 'string'
       ? document.querySelector(root)
@@ -18,6 +44,23 @@
     init: function(){
       return this.add(ld$.find('[data-name]'));
     },
+    on: function(n, cb){
+      var ref$;
+      return ((ref$ = this.evtHandler)[n] || (ref$[n] = [])).push(cb);
+    },
+    fire: function(n){
+      var v, res$, i$, to$, ref$, len$, cb, results$ = [];
+      res$ = [];
+      for (i$ = 1, to$ = arguments.length; i$ < to$; ++i$) {
+        res$.push(arguments[i$]);
+      }
+      v = res$;
+      for (i$ = 0, len$ = (ref$ = this.evtHandler[n] || []).length; i$ < len$; ++i$) {
+        cb = ref$[i$];
+        results$.push(cb.apply(this, v));
+      }
+      return results$;
+    },
     parse: function(node){
       var p, group, name, tab, active;
       p = ld$.parent(node, '[data-tab]', this.root);
@@ -25,10 +68,10 @@
       name = node.getAttribute('data-name');
       tab = p ? p.getAttribute('data-type') : null;
       if (!tab) {
-        tab = node.getAttribute('data-type') === 'tab';
+        tab = node.getAttribute('data-type');
       }
+      tab = tab === 'tab';
       active = node.hasAttribute('default') && node.getAttribute('default') !== 'false';
-      console.log(active);
       return {
         group: group,
         name: name,
@@ -42,11 +85,20 @@
         ? nodes
         : [nodes];
       return nodes.map(function(node){
-        var ref$, group, name, tab, active, n, ref1$, k, v;
-        ref$ = this$.parse(node), group = ref$[0], name = ref$[1], tab = ref$[2], active = ref$[3];
+        var ref$, group, name, tab, active, n, ref1$, delay, k, v;
+        ref$ = this$.parse(node), group = ref$.group, name = ref$.name, tab = ref$.tab, active = ref$.active;
         n = (ref$ = (ref1$ = this$.group)[group] || (ref1$[group] = {}))[name] || (ref$[name] = {});
+        if (!node._ldtab_debounce) {
+          delay = this$.cls[tab ? 'tab' : 'panel'].delay;
+          if (delay) {
+            node._ldtab_debounce = debounce(delay, function(){
+              return node.classList.remove('active');
+            });
+          }
+        }
         if (tab) {
           n.tab = (n.tab || (n.tab = [])).concat([node]);
+          node.classList.add(this$.cls.tab.className);
           node.addEventListener('click', function(){
             return this$.toggle({
               group: group,
@@ -55,6 +107,7 @@
           });
         } else {
           n.panel = (n.panel || (n.panel = [])).concat([node]);
+          node.classList.add(this$.cls.panel.className);
         }
         if (active) {
           (function(){
@@ -80,15 +133,51 @@
       });
     },
     update: function(arg$){
-      var group, name, active, n, ref$, ref1$;
+      var group, name, active, n, ref$, ref1$, this$ = this;
       group = arg$.group, name = arg$.name, active = arg$.active;
       n = (ref$ = (ref1$ = this.group)[group] || (ref1$[group] = {}))[name] || (ref$[name] = {});
-      (n.tab || (n.tab = [])).map(function(it){
-        return it.classList.toggle('active', active);
-      });
-      (n.panel || (n.panel = [])).map(function(it){
-        return it.classList.toggle('active', active);
-      });
+      if (active) {
+        ['tab', 'panel'].map(function(t){
+          return (n[t] || (n[t] = [])).map(function(node){
+            if (node.classList.contains('active')) {
+              return;
+            }
+            if (this$.cls[t].activate) {
+              return this$.cls[t].activate({
+                node: node
+              });
+            } else {
+              if (node._ldtab_debounce) {
+                node._ldtab_debounce.clear();
+              }
+              node.classList.remove(this$.cls[t].classOut);
+              node.classList.add(this$.cls[t].classIn);
+              return node.classList.add('active');
+            }
+          });
+        });
+      } else {
+        ['tab', 'panel'].map(function(t){
+          return (n[t] || (n[t] = [])).map(function(node){
+            if (!node.classList.contains('active')) {
+              return;
+            }
+            if (this$.cls[t].deactivate) {
+              return this$.cls[t].deactivate({
+                node: node
+              });
+            } else {
+              if (node._ldtab_debounce) {
+                node._ldtab_debounce();
+              } else {
+                node.classList.remove('active');
+              }
+              node.classList.remove(this$.cls[t].classIn);
+              return node.classList.add(this$.cls[t].classOut);
+            }
+          });
+        });
+      }
       return n.active = active;
     },
     toggle: function(arg$){
@@ -99,7 +188,7 @@
         var ref$, results$ = [];
         for (k in ref$ = this.group[group]) {
           v = ref$[k];
-          results$.push(v);
+          results$.push(k);
         }
         return results$;
       }.call(this)).map(function(name){
@@ -109,10 +198,14 @@
           active: false
         });
       });
-      return this.update({
+      this.update({
         group: group,
         name: name,
         active: true
+      });
+      return this.on('on', {
+        group: group,
+        name: name
       });
     }
   });
