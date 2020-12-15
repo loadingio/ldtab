@@ -1,6 +1,5 @@
 main = (opt) ->
   @opt = opt
-
   @cls = do
     tab:
       className: <[ldtab]>
@@ -24,15 +23,17 @@ main = (opt) ->
   @init!
   @
 
-
 main.prototype = Object.create(Object.prototype) <<< do
-  init: ->
-    @add ld$.find '[ldtab]'
-
   on: (n, cb) -> @evt-handler.[][n].push cb
   fire: (n, ...v) -> for cb in (@evt-handler[n] or []) => cb.apply @, v
+  init: ->
+    @add Array.from(@root.querySelectorAll('[ldtab]'))
+
   parse: (node) ->
-    p = ld$.parent node, '[ldtab-group]', @root
+    n = node
+    while n and n != @root and (!n.matches or (n.matches and !n.matches '[ldtab-group]' )) => n = n.parentNode
+    p = if !(n and n.matches and n.matches('[ldtab-group]')) => null else n
+
     group = (if p => p else node).getAttribute(\ldtab-group)
     name = node.getAttribute(\ldtab)
     tab = if p => p.getAttribute(\type) else null
@@ -57,8 +58,7 @@ main.prototype = Object.create(Object.prototype) <<< do
       else
         n.[]panel ++= [node]
         node.classList.add @cls.panel.className
-      if active => [v for k,v of @group[group]].map (name) ~> @update {group, name, active: false}
-      @update {group, name, active}
+      if active => @toggle {group, name}
 
   update: ({group, name, active}) ->
     n = @group{}[group]{}[name]
@@ -87,5 +87,10 @@ main.prototype = Object.create(Object.prototype) <<< do
     [k for k,v of @group[group]].filter(->it != name).map (name) ~> @update {group, name, active: false}
     @update {group, name, active: true}
     @on \on, {group, name}
+
+lc = {}
+main.init = (opt) ->
+  lc.ldtab = new ldtab opt
+  lc.ldtab.add Array.from(document.querySelectorAll('[ldtab]'))
 
 window.ldtab = main
