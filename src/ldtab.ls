@@ -84,7 +84,7 @@ main.prototype = Object.create(Object.prototype) <<< do
 
   toggle: ({group, name}) ->
     g = @group{}[group]
-    [k for k,v of @group[group]].map (name) ~> @update {group, name, active: false}
+    [k for k,v of @group[group]].filter(->it != name).map (name) ~> @update {group, name, active: false}
     @update {group, name, active: true}
     @on \on, {group, name}
 

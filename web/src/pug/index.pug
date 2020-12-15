@@ -6,19 +6,40 @@ html
     +css("/assets/lib/bootstrap.ldui/main/bootstrap.ldui.min.css")
     +css("/assets/lib/@loadingio/transition.css/main/transition.min.css")
     +css("/assets/lib/ldtab/dev/ldtab.min.css")
+    +css("/css/index.css")
   body
+    mixin secondary
+      .d-flex.mb-4(data-tab="secondary",data-type="tab")
+        .px-4.py-2(data-name="alt1",default) alt-1
+        .px-4.py-2(data-name="alt2") alt-2
+        .px-4.py-2(data-name="alt3") alt-3
+        .px-4.py-2(data-name="alt4") alt-4
     .w-1024.mx-auto.rwd.my-4
-      .d-flex.mb-4(data-tab="main",data-type="tab")
-        .p-4(data-name="tab1",default) tab1
-        .p-4(data-name="tab2") tab2
-        .p-4(data-name="tab3") tab3
-        .p-4(data-name="tab4") tab4
-      .d-flex(data-tab="main", data-type="panel")
-        .p-4(data-name="tab1",default) panel1
-        .p-4.ld.ld-bounce-in(data-name="tab2") panel2
-        .p-4(data-name="tab3") panel3
-        .p-4(data-name="tab4") panel4
-
+      .d-flex
+        .flex-grow-1
+          .d-flex.mb-4(data-tab="main",data-type="tab")
+            .px-4.py-2(data-name="tab1",default) tab1
+            .px-4.py-2(data-name="tab2") tab2
+            .px-4.py-2(data-name="tab3") tab3
+            .px-4.py-2(data-name="tab4") tab4
+          .d-flex.mb-4(data-tab="main", data-type="panel")
+            .p-4(data-name="tab1",default) panel1
+            .p-4(data-name="tab2") panel2
+            .p-4(data-name="tab3")
+              .mx-2.mb-4 panel3
+              +secondary
+            .p-4(data-name="tab4") panel4
+          .d-flex(data-tab="secondary", data-type="panel")
+            .p-4(data-name="alt1",default) panel1
+            .p-4(data-name="alt2")
+              .mx-2.mb-4 panel2
+              .d-flex.mb-4(data-tab="main",data-type="tab")
+                .px-4.py-2(data-name="tab1") tab1
+                .px-4.py-2(data-name="tab2") tab2
+            .p-4(data-name="alt3") panel3
+            .p-4(data-name="alt4") panel4
+        .flex-grow-1
+          +secondary
     +script("/assets/lib/@loadingio/ldquery/main/ldq.min.js")
     +script("/assets/lib/@loadingio/debounce.js/main/debounce.min.js")
     +script("/assets/lib/ldtab/dev/ldtab.min.js")

@@ -191,7 +191,9 @@
           results$.push(k);
         }
         return results$;
-      }.call(this)).map(function(name){
+      }.call(this)).filter(function(it){
+        return it !== name;
+      }).map(function(name){
         return this$.update({
           group: group,
           name: name,
