@@ -1,0 +1,24 @@
+doctype html
+html
+  include /../../static/assets/lib/bootstrap.ldui/main/index.pug
+  head
+    +css("/assets/lib/bootstrap/main/css/bootstrap.min.css")
+    +css("/assets/lib/bootstrap.ldui/main/bootstrap.ldui.min.css")
+  body
+    .w-1024.mx-auto.rwd.my-4
+      .d-flex.mb-4(data-tab="main")
+        .p-4(data-name="tab1",default) tab1
+        .p-4(data-name="tab2") tab2
+        .p-4(data-name="tab3") tab3
+        .p-4(data-name="tab4") tab4
+      .d-flex(data-tab="main", data-type="panel")
+        .p-4(data-name="tab1",default) panel1
+        .p-4(data-name="tab2") panel2
+        .p-4(data-name="tab3") panel3
+        .p-4(data-name="tab4") panel4
+
+    +script("/assets/lib/@loadingio/ldquery/main/ldq.min.js")
+    +script("/assets/lib/ldtab/dev/ldtab.min.js")
+    script: :lsc
+      fd = new ldtab root: document.body
+
