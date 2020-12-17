@@ -3,7 +3,7 @@
   "name": "ldtab",
   "license": "MIT",
   "description": "simple tab widget",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "files": [
     "dist/**/*"
   ],
@@ -43,5 +43,8 @@
       "@loadingio/transition.css",
       "ldview"
     ]
+  },
+  "peerDependencies": {
+    "@loadingio/debounce.js": "0.0.1"
   }
 }
