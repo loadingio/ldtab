@@ -196,7 +196,7 @@
         name: name,
         active: true
       });
-      return this.on('on', {
+      return this.fire('on', {
         group: group,
         name: name
       });

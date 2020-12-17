@@ -86,7 +86,7 @@ main.prototype = Object.create(Object.prototype) <<< do
     g = @group{}[group]
     [k for k,v of @group[group]].filter(->it != name).map (name) ~> @update {group, name, active: false}
     @update {group, name, active: true}
-    @on \on, {group, name}
+    @fire \on, {group, name}
 
 lc = {}
 main.init = (opt) ->
