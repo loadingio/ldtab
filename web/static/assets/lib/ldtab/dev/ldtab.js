@@ -37,7 +37,7 @@
     this.active = {};
     this.pends = {};
     this.group = {};
-    if (opt.autoInit) {
+    if (!(opt.autoInit != null) || opt.autoInit) {
       this.init();
     }
     return this;

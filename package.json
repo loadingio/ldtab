@@ -3,7 +3,7 @@
   "name": "ldtab",
   "license": "MIT",
   "description": "simple tab widget",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "files": [
     "dist/**/*"
   ],
@@ -25,7 +25,7 @@
     "bootstrap": "^4.5.2",
     "bootstrap.ldui": "github:loadingio/bootstrap.ldui",
     "bootstrap.native": "^3.0.13",
-    "fedep": "0.0.7",
+    "fedep": "0.0.10",
     "ldview": "0.0.2",
     "stylus": "^0.54.5",
     "template": "github:zbryikt/template#v2.1.7",
