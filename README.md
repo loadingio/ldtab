@@ -27,6 +27,19 @@ Available options:
    - classOut: class name for transition out. default `ldtab-out` for tab, `ldtab-panel-out` for panel.
    - delay: delay ( in ms ) before deactivating tab / panel. default 350
    - deactivate({node}): function called when tab / panel is deactivated. default null.
+   - activate({node}): function called when tab / panel is activated. default null.
+
+## Activate / Deactivate Events
+
+With `activate` and `deactivate` callback, you can customize how panel / tab behave when their state changes. However, this means that the default dynamics ( involving `classIn` and `classOut` ) will not work anymore.
+
+Additionally, you need to always toggle `active` class of panel / tab element to provide hints about the state of these elements to ldtab:
+
+    new ldtab
+      tab:
+        activate: ({node}) -> node.classList.add \active, \d-block
+        deactivate: ({node}) -> node.classList.remove \active, \d-block
+
 
 
 ## License
