@@ -1,11 +1,11 @@
 doctype html
 html
-  include /../../static/assets/lib/bootstrap.ldui/main/index.pug
+  include @/@loadingio/bootstrap.ext/index.pug
   head
-    +css("/assets/lib/bootstrap/main/css/bootstrap.min.css")
-    +css("/assets/lib/bootstrap.ldui/main/bootstrap.ldui.min.css")
+    +css("/assets/lib/bootstrap/main/dist/css/bootstrap.min.css")
+    +css("/assets/lib/@loadingio/bootstrap.ext/main/index.min.css")
     +css("/assets/lib/@loadingio/transition.css/main/transition.min.css")
-    +css("/assets/lib/ldtab/dev/ldtab.min.css")
+    +css("/assets/lib/ldtab/dev/index.min.css")
     +css("/css/index.css")
   body
     mixin secondary
@@ -40,10 +40,10 @@ html
             .p-4(ldtab="alt4") panel4
         .flex-grow-1
           +secondary
-    +script("/assets/lib/@loadingio/ldquery/main/ldq.min.js")
-    +script("/assets/lib/@loadingio/debounce.js/main/debounce.min.js")
-    +script("/assets/lib/ldtab/dev/ldtab.min.js")
-    script: :lsc
+    +script("/assets/lib/@loadingio/ldquery/main/index.min.js")
+    +script("/assets/lib/@loadingio/debounce.js/main/index.min.js")
+    +script("/assets/lib/ldtab/dev/index.min.js")
+    script(type="module"): :lsc
       fd = new ldtab do
         root: document.body
         panel: delay: 0, deactivate: ({node}) -> node.classList.remove \active

@@ -1,4 +1,4 @@
-main = (opt) ->
+ldtab = (opt) ->
   @opt = opt
   @cls = do
     tab:
@@ -23,7 +23,7 @@ main = (opt) ->
   if !(opt.auto-init?) or opt.auto-init => @init!
   @
 
-main.prototype = Object.create(Object.prototype) <<< do
+ldtab.prototype = Object.create(Object.prototype) <<< do
   on: (n, cb) -> @evt-handler.[][n].push cb
   fire: (n, ...v) -> for cb in (@evt-handler[n] or []) => cb.apply @, v
   init: ->
@@ -89,8 +89,9 @@ main.prototype = Object.create(Object.prototype) <<< do
     @fire \on, {group, name}
 
 lc = {}
-main.init = (opt) ->
+ldtab.init = (opt) ->
   lc.ldtab = new ldtab opt
   lc.ldtab.add Array.from(document.querySelectorAll('[ldtab]'))
 
-window.ldtab = main
+if module? => module.exports = ldtab
+else if window? => window.ldtab = ldtab

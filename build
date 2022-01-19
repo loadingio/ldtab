@@ -4,15 +4,15 @@ echo "prepare..."
 rm -rf dist
 mkdir -p dist
 
-echo "building ldtab.ls -> ldtab.js ..."
-npx lsc -cp src/ldtab.ls > dist/ldtab.js
-echo "minify ldtab.js -> ldtab.min.js ..."
-npx uglifyjs dist/ldtab.js > dist/ldtab.min.js
+echo "building index.ls -> index.js ..."
+./node_modules/.bin/lsc -cp --no-header src/index.ls > dist/index.js
+echo "minify index.js -> index.min.js ..."
+./node_modules/.bin/uglifyjs dist/index.js -m -c > dist/index.min.js
 
-echo "build src/ldtab.styl -> dist/ldtab.css ..."
-./node_modules/.bin/stylus -p src/ldtab.styl > dist/ldtab.css
-echo "minifying ldtab.css ..."
-./node_modules/.bin/uglifycss dist/ldtab.css > dist/ldtab.min.css
+echo "build src/index.styl -> dist/index.css ..."
+./node_modules/.bin/stylus -p src/index.styl > dist/index.css
+echo "minifying index.css ..."
+./node_modules/.bin/uglifycss dist/index.css > dist/index.min.css
 
 echo "copy dist to web ..."
 rm -rf web/static/assets/lib/ldtab/dev/
